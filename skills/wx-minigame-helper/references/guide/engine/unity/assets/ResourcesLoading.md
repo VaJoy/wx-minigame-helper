@@ -1,0 +1,69 @@
+---
+title: "资源按需加载概述"
+type: guide
+category: guide/engine/unity/assets
+source: https://developers.weixin.qq.com/minigame/dev/guide/game-engine/unity-webgl-transform/Design/ResourcesLoading.html
+---
+
+# 资源按需加载概述
+
+​ 区别于原生 APP 游戏通常安装与启动时将资源都下载完成，小游戏需要做到“即点即玩”，启动仅能加载少量资源，其余部分都必须放CDN进行延迟加载，如何合理与高效地进行资源按需加载是非常重要的事情。
+
+​ 目前分包将基于 AA/AB 包的按需加载，以及 Unity Instant Game 三种方案。值得注意的是，微信小游戏环境中**不支持对本地的 Bundle 进行加载** ，因此无论哪种方案最终都采用上传 CDN 方式在游戏运行时异步按需下载。
+
+#### AA包、AB包、Instant Game 方案选择说明
+
+> 相关手册：[AA(Addressable) 进行资源按需加载](<UsingAddressable.md>) 、 [AB(AssetBundle)进行资源按需加载](<UsingAssetBundle.md>) 、[Instant Game 实践指南](<../getting-started/InstantGameGuide.md>)
+
+​ AA/AB 包是常规的分包解决方案，关于他们的选择对于轻度游戏来说两者没有特别要求，倒是功能强大的 AA包 使用门槛更低一些，而对于重度游戏，平台目前所反馈到的结论是使用 **AB包** 的性能要比 AA包 更好，AA包较大项目时生成的未压缩的 catalog 较大，加载效率低，改用 AB包后，效果提升明显。
+
+​ Instant Game 是由 Unity 官方提供的自动加载方案，有关 Instant Game 详细内容可查阅 **Instant Game 实践指南** ，本节说明三种方案的差异：
+
+| 常规资源加载方案（AA/AB包） | Instant Game 工具  
+---|---|---  
+技术原理 | 基于 AA/AB 包的异步资源管理 | Unity引擎底层资源异步加载策略  
+引擎版本 | 不限制 | 目前需指定版本 2021.2.5  
+转化人力 | 适中 | 较少/适中  
+懒加载资源类型 | 常见纹理资源 | 纹理、模型、骨骼动画、音频资源  
+自选CDN | 支持 | 不支持（需使用腾讯云CDN服务）  
+必要的代码修改 | 通常需要适配 | 较少/达到最佳仍需要  
+首资源包处理 | 通常需要适配 | 默认不需要/达到最佳仍需要  
+  
+**选择建议：**
+
+  * 游戏工程本身已采用完善的 AA/AB 资源管理，建议继续沿用常规资源加载方案，且有助于后续压缩纹理等优化工作的进行有效提升游戏运行性能；
+  * 原生 APP 版本游戏完全没有做资源的拆包，希望减少游戏的转化周期，使用 Instant Game 方案可以快速完成转化工作。
+
+### 各类型游戏的资源优化建议
+
+​ 不同的游戏所需要的性能不尽相同，转化过程中的复杂度以及关注的侧重点自然也是不同的。游戏开发者可以根据自己游戏的类型进行不同的优化策略来提升实际的游戏体验，本节总结的列举开发者对不同类型的游戏应重点关注的优化内容。
+
+#### 原生 APP 手游已使用 AB/AA 包等资源按需加载的游戏**
+
+特点：游戏原本发布原生 APP 平台，将游戏资源以 AA/AB 包方式存放于磁盘本地，在游戏运行时适宜的位置进行加载/卸载。
+
+优化建议：
+
+  * 将 AA/AB 资源包使用CDN远程加载，及时卸载不再使用的资源包释放内存，同时结合[压缩纹理优化](<CompressedTexture.md>)减少包体积。
+  * 当APP异步方式使用AB时(如AssetBundle.LoadAssetAsync)，调整为从UnityWebRequest下载创建AB即可，具体请参考[使用 AssetBundle 进行资源按需加载](<UsingAssetBundle.md>)。
+  * 当APP同步方式使用AB时(如AssetBundle.LoadFromFile, AssetBundle.LoadAssetAsync)，调整为UnityWebRequest异步接口创建AB，并使用LoadAssetAsync等异步接口。异步接口修改可能需要涉及到业务逻辑改造，工作量极大时也可结合[使用 Unity Instant Game 进行资源按需加载](<../getting-started/InstantGameGuide.md>)将部分资源自动剥离。
+  * AssetBundle无需再使用本地文件系统缓存和版本更新，小游戏适配插件已自动进行缓存，请参考[资源缓存](<FileCache.md>)。
+  * 大型游戏不建议使用Addressable，因为当key达到几千个之后构建的资源索引文件(catalog)往往会非常大，对下载和解析造成较大压力。
+
+#### 原生 APP 手游未使用 资源按需加载 的轻度游戏
+
+特点：游戏总包体积较小，“关卡”休闲类小游戏等。
+
+优化建议：
+
+  * 快速适配对微信API能力的接入，性能上重点对首场景启动优化，关卡分包加载（主关卡优先，后续关卡按需加载等）。
+  * 建议[使用 Unity Instant Game 进行资源按需加载](<../getting-started/InstantGameGuide.md>)缩短转换周期。
+
+#### 原生 APP 手游未使用 资源按需加载 的中重度游戏
+
+特点：游戏较大，但未使用 AA/AB 包方式进行分包管理，或较少使用，场景中必须与非及时资源在启动时一并加载。
+
+优化建议：
+
+  * 该类游戏需要耐心调优，需将游戏内资源逐一拆分，推荐使用 AB包 方式进行按需加载与及时资源释放，对多 Scene 时对后续场景使用 AA/AB分包方式载入。
+  * 做好资源加载过程中的UI上的进度条反馈。

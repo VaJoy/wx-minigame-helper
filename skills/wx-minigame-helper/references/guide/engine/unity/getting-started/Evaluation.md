@@ -1,0 +1,41 @@
+---
+title: "方案评估"
+type: guide
+category: guide/engine/unity/getting-started
+source: https://developers.weixin.qq.com/minigame/dev/guide/game-engine/unity-webgl-transform/Design/Evaluation.html
+---
+
+# 方案评估
+
+### 1\. 游戏类目
+
+考虑到游戏体积与逻辑复杂度，目前建议中轻度2D/3D游戏进行转换，游戏类目包括：
+
+  * 休闲：消除，答题，模拟经营，塔防，益智等
+  * 动作：跑酷，飞行设计，轻度IO
+  * 棋牌：棋类，牌类
+  * 角色：卡牌，回合，策略
+
+对重度游戏如MMO/FPS等游戏需根据实际情况评估
+
+### 2\. 引擎版本
+
+版本建议：
+
+本适配方案以团结引擎为主要支持目标，同时兼容传统Unity引擎。基于WebAssembly技术，具有非常宽泛的兼容性，转换插件理论上支持的引擎版本涵盖：Unity 2018~2022、团结引擎
+
+### 3\. 能力支持
+
+能力 | 是否支持 | 解决方案  
+---|---|---  
+基础模块 | 支持 | 支持动画、物理、AI、UI等基础模块  
+渲染管线 | 支持 | 支持标准渲染管线、URP  
+资源加载 | 支持 | Addressable、AssetBundle网络异步加载  
+Lua脚本 | 支持 | 支持标准Lua与常见binding(如xlua, tolua等)， 不支持Luajit。需根据实际游戏在真机验证性能  
+PureTS | 支持 | iOS系统需14.5以上, 支持JIT  
+音频 | 支持 | 基本能力支持，支持fmod插件(长音频请使用UnityAudio), 但不支持wwise。  
+第三方插件 | 部分支持 | 支持大部分插件，C#插件与非平台相关的C原生插件  
+网络系统 | 需调整 | HTTP使用UnityWebRequest，TCP使用WX SDK适配或WebSocket通信替代(如开源的UnityWebSocket插件)，UDP使用WX SDK适配  
+渲染接口 | 支持 | 仅支持WebGL1.0(相当于OpenGLES2.0)，2.0支持处于Beta测试阶段  
+多线程 | 不支持 | 删除多线程用法，使用异步等其他替代方式  
+文件API | 需调整 | 不支持System.File接口，但可使用微信小游戏WX SDK实现文件存储，[大小限制为200MB(最高可开通1GB)](<../assets/FileCache.md>)。玩家存档请使用服务器或云开发；AssetsBundle缓存适配插件已自动支持

@@ -1,0 +1,178 @@
+---
+title: "FileSystemManager.readZipEntry(Object object)"
+type: api
+category: api/file
+api: "FileSystemManager.readZipEntry"
+source: https://developers.weixin.qq.com/minigame/dev/api/file/FileSystemManager.readZipEntry.html
+---
+
+# FileSystemManager.readZipEntry(Object object)
+
+> 基础库 2.17.3 开始支持，低版本需做[兼容处理](<../../guide/runtime/client-lib/compatibility.md>)。
+
+> **以[Promise 风格](<https://developers.weixin.qq.com/minigame/dev/game-engine/worker/api.html#异步-API-返回-Promise>) 调用**：不支持
+> 
+> **微信 鸿蒙 OS 版** ：支持
+
+## 功能描述
+
+读取压缩包内的文件
+
+## 参数
+
+### Object object
+
+| 属性 | 类型 | 默认值 | 必填 | 说明  
+---|---|---|---|---|---  
+|  filePath | string |  | 是 | 要读取的压缩包的路径 (本地路径)  
+|  encoding | string |  | 否 | 统一指定读取文件的字符编码，只在 entries 值为"all"时有效。如果 entries 值为"all"且不传 encoding，则以 ArrayBuffer 格式读取文件的二进制内容  
+| |  合法值 | 说明  
+---|---  
+ascii |   
+base64 |   
+binary |   
+hex |   
+ucs2 | 以小端序读取  
+ucs-2 | 以小端序读取  
+utf16le | 以小端序读取  
+utf-16le | 以小端序读取  
+utf-8 |   
+utf8 |   
+latin1 |   
+|  entries | Array.<Object>/'all' |  | 是 | 要读取的压缩包内的文件列表（当传入"all" 时表示读取压缩包内所有文件）  
+| |  | 结构属性 | 类型 | 默认值 | 必填 | 说明  
+---|---|---|---|---|---  
+|  path | string |  | 是 | 压缩包内文件路径  
+|  encoding | string |  | 否 | 指定读取文件的字符编码，如果不传 encoding，则以 ArrayBuffer 格式读取文件的二进制内容  
+| |  合法值 | 说明  
+---|---  
+ascii |   
+base64 |   
+binary |   
+hex |   
+ucs2 | 以小端序读取  
+ucs-2 | 以小端序读取  
+utf16le | 以小端序读取  
+utf-16le | 以小端序读取  
+utf-8 |   
+utf8 |   
+latin1 |   
+|  position | number |  | 否 | 从文件指定位置开始读，如果不指定，则从文件头开始读。读取的范围应该是左闭右开区间 [position, position+length)。有效范围：[0, fileLength - 1]。单位：byte  
+|  length | number |  | 否 | 指定文件的长度，如果不指定，则读到文件末尾。有效范围：[1, fileLength]。单位：byte  
+  
+|  success | function |  | 否 | 接口调用成功的回调函数  
+|  fail | function |  | 否 | 接口调用失败的回调函数  
+|  complete | function |  | 否 | 接口调用结束的回调函数（调用成功、失败都会执行）  
+  
+#### object.success 回调函数
+
+##### 参数
+
+###### Object res
+
+| 属性 | 类型 | 说明  
+---|---|---|---  
+|  entries | Object | 文件读取结果。res.entries 是一个对象，key是文件路径，value是一个对象 FileItem ，表示该文件的读取结果。每个 FileItem 包含 data （文件内容） 和 errMsg （错误信息） 属性。  
+| |  | 结构属性 | 类型 | 说明  
+---|---|---|---  
+|  path | Object | 文件路径  
+| |  | 结构属性 | 类型 | 说明  
+---|---|---|---  
+|  data | string/ArrayBuffer | 文件内容  
+|  errMsg | string | 错误信息  
+  
+## 错误
+
+错误码 | 错误信息 | 说明  
+---|---|---  
+1300001 | operation not permitted | 操作不被允许（例如，filePath 预期传入一个文件而实际传入一个目录）  
+1300002 | no such file or directory ${path} | 文件/目录不存在，或者目标文件路径的上层目录不存在  
+1300005 | Input/output error | 输入输出流不可用  
+1300009 | bad file descriptor | 无效的文件描述符  
+1300013 | permission denied | 权限错误，文件是只读或只写  
+1300014 | Path permission denied | 传入的路径没有权限  
+1300020 | not a directory | dirPath 指定路径不是目录，常见于指定的写入路径的上级路径为一个文件的情况  
+1300021 | Is a directory | 指定路径是一个目录  
+1300022 | Invalid argument | 无效参数，可以检查length或offset是否越界  
+1300036 | File name too long | 文件名过长  
+1300066 | directory not empty | 目录不为空  
+1300201 | system error | 系统接口调用失败  
+1300202 | the maximum size of the file storage limit is exceeded | 存储空间不足，或文件大小超出上限（上限100M）  
+1300203 | base64 encode error | 字符编码转换失败（例如 base64 格式错误）  
+1300300 | sdcard not mounted | android sdcard 挂载失败  
+1300301 | unable to open as fileType | 无法以fileType打开文件  
+1301000 | permission denied, cannot access file path | 目标路径无访问权限（usr目录）  
+1301002 | data to write is empty | 写入数据为空  
+1301003 | illegal operation on a directory | 不可对目录进行此操作（例如，指定的 filePath 是一个已经存在的目录）  
+1301004 | illegal operation on a package directory | 不可对代码包目录进行此操作  
+1301005 | file already exists ${dirPath} | 已有同名文件或目录  
+1301006 | value of length is out of range | 传入的 length 不合法  
+1301007 | value of offset is out of range | 传入的 offset 不合法  
+1301009 | value of position is out of range | position值越界  
+1301100 | store directory is empty | store目录为空  
+1301102 | unzip open file fail | 压缩文件打开失败  
+1301103 | unzip entry fail | 解压单个文件失败  
+1301104 | unzip fail | 解压失败  
+1301111 | brotli decompress fail | brotli解压失败（例如，指定的 compressionAlgorithm 与文件实际压缩格式不符）  
+1301112 | tempFilePath file not exist | 指定的 tempFilePath 找不到文件  
+1302001 | fail permission denied | 指定的 fd 路径没有读权限/没有写权限  
+1302002 | excced max concurrent fd limit | fd数量已达上限  
+1302003 | invalid flag | 无效的flag  
+1302004 | permission denied when open using flag | 无法使用flag标志打开文件  
+1302005 | array buffer does not exist | 未传入arrayBuffer  
+1302100 | array buffer is readonly | arrayBuffer只读  
+  
+## 示例代码
+    
+    
+    const fs = wx.getFileSystemManager()
+    // 读取zip内某个或多个文件
+    fs.readZipEntry({
+      filePath: 'wxfile://from/to.zip',
+      entries: [{
+        path: 'some_folder/my_file.txt', // zip内文件路径
+        encoding: 'utf-8', // 指定读取文件的字符编码，如果不传 encoding，则以 ArrayBuffer 格式读取文件的二进制内容
+        position: 0, // 从文件指定位置开始读，如果不指定，则从文件头开始读。读取的范围应该是左闭右开区间 [position, position+length)。有效范围：[0, fileLength - 1]。单位：byte
+        length: 10000, // 指定文件的长度，如果不指定，则读到文件末尾。有效范围：[1, fileLength]。单位：byte
+      }, {
+        path: 'other_folder/orther_file.txt', // zip内文件路径
+      }],
+      success(res) {
+        console.log(res.entries)
+        // res.entries === {
+        //     'some_folder/my_file.txt': {
+        //         errMsg: 'readZipEntry:ok',
+        //         data: 'xxxxxx'
+        //     },
+        //     'other_folder/orther_file.txt': {
+        //         data: (ArrayBuffer)
+        //     }
+        // }
+      },
+      fail(res) {
+        console.log(res.errMsg)
+      },
+    })
+    
+    // 读取zip内所有文件。允许指定统一的encoding。position、length则不再允许指定，分别默认为0和文件长度
+    fs.readZipEntry({
+      filePath: 'wxfile://from/to.zip',
+      entries: 'all'
+      encoding: 'utf-8', // 统一指定读取文件的字符编码，如果不传 encoding，则以 ArrayBuffer 格式读取文件的二进制内容
+      success(res) {
+        console.log(res.entries)
+        // res.entries === {
+        //     'some_folder/my_file.txt': {
+        //         errMsg: 'readZipEntry:ok',
+        //         data: 'xxxxxx'
+        //     },
+        //     'other_folder/orther_file.txt': {
+        //         errMsg: 'readZipEntry:ok',
+        //         data: 'xxxxxx'
+        //     }
+        //  }
+      },
+      fail(res) {
+        console.log(res.errMsg)
+      },
+    })
