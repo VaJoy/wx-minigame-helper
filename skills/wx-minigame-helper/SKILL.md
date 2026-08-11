@@ -1,6 +1,6 @@
 ---
 name: wx-minigame-helper
-description: 微信小游戏开发助手。当用户咨询微信小游戏（minigame）开发相关问题时使用，包括：wx.* API 的用法/参数/返回值查询、开放能力接入（登录、分享、排行榜、广告、虚拟支付、订阅消息、视频号、游戏圈等）、包体与启动优化、性能排查、Worker 多线程、开放数据域、Unity/Cocos 等引擎转小游戏、发布审核与版本更新、PC/鸿蒙多平台适配，以及服务端开放接口查询（access_token、code2Session、内容安全、虚拟支付、对战匹配、帧同步等）。内置 1217 篇官方文档本地知识库（前端 1173 + 服务端 44）与配套 wx.* TypeScript 类型声明，优先从中检索作答，避免凭记忆编造 API 行为。
+description: 微信小游戏开发助手。当用户咨询微信小游戏（minigame）开发相关问题时使用。内置微信小游戏开发相关的本地知识库，以及配套的 TypeScript 类型声明文件。
 agent_created: true
 ---
 
@@ -80,7 +80,7 @@ references/
    - 网络请求域名需在 mp 后台配置（见 `references/guide/base-ability/network.md`）
    - 主包 4M 限制与分包方案（见 `references/topics/subpackage-startup.md`）
 4. **警惕过时接口**：用户信息获取等接口历经多次变更，以知识库文档中的最新说明为准，不使用记忆中的旧接口行为。
-5. **知识库未覆盖的内容**：文档 frontmatter 的 `source` 字段是官网原文链接；本地确实没有时，明确告知并建议查阅微信开放文档官网（https://developers.weixin.qq.com/minigame/dev/），不要编造。
+5. **知识库未覆盖的内容**：文档 frontmatter 的 `source` 字段是官网原文链接；本地确实没有时，明确告知并建议查阅[微信开放文档官网](https://developers.weixin.qq.com/minigame/dev/)，不要编造。
 6. 给代码示例时优先采用文档中的官方示例，再结合用户场景改写。
 
 ## 类型声明资源（scripts/types/）
