@@ -14,3 +14,4 @@
 | [性能](performance/README.md) | 38 |
 | [运行时机制](runtime/README.md) | 15 |
 | [安全](security/README.md) | 3 |
+| [在 Cocos Creator 中分包/配置远程包](cocos-packaging/README.md) | 6 |
