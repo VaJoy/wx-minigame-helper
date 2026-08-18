@@ -4,6 +4,8 @@
 
 SKILL 存放于 `./skills/wx-minigame-helper/`。
 
+> 💡 想尝试 Agent 的可以[来 workbuddy 薅羊毛](https://www.workbuddy.cn/events/invite?inviteCode=21331jsck) ， 新用户送 2600 积分，每天签到又送 100 积分，搭配 ds v4 flash 可以用很久很久。
+
 ## 它能做什么
 
 - **API 查询**：`wx.*` 任意接口的用法、参数、返回值、错误码、最低基础库版本
