@@ -1132,6 +1132,35 @@ interface WebAudioContext {
 interface WebAudioContextNode {
 }
 
+/** 音频分析节点（WebAudio 内置类型，仅在此处提供最小声明） */
+interface AnalyserNode extends WebAudioContextNode {}
+/** 滤波器节点 */
+interface BiquadFilterNode extends WebAudioContextNode {}
+/** 通道合并节点 */
+interface ChannelMergerNode extends WebAudioContextNode {}
+/** 通道分离节点 */
+interface ChannelSplitterNode extends WebAudioContextNode {}
+/** 恒定信号节点 */
+interface ConstantSourceNode extends WebAudioContextNode {}
+/** 延时节点 */
+interface DelayNode extends WebAudioContextNode {}
+/** 动态压缩节点 */
+interface DynamicsCompressorNode extends WebAudioContextNode {}
+/** 增益节点 */
+interface GainNode extends WebAudioContextNode {}
+/** IIR 滤波器节点 */
+interface IIRFilterNode extends WebAudioContextNode {}
+/** 振荡器节点 */
+interface OscillatorNode extends WebAudioContextNode {}
+/** 声像/立体声定位节点 */
+interface PannerNode extends WebAudioContextNode {}
+/** 周期波节点 */
+interface PeriodicWaveNode extends WebAudioContextNode {}
+/** 脚本处理节点 */
+interface ScriptProcessorNode extends WebAudioContextNode {}
+/** 波形整形节点 */
+interface WaveShaperNode extends WebAudioContextNode {}
+
 interface WxMedia {
   /**
    * 从本地相册选择图片或使用相机拍照。

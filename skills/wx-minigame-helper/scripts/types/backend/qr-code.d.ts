@@ -58,6 +58,16 @@ interface GetQRCodeRequest {
   env_version?: string
 }
 
+/** 小程序码线条颜色（RGB，十进制表示） */
+interface GetQRCodeLineColor {
+  /** 红色值 */
+  r: string
+  /** 绿色值 */
+  g: string
+  /** 蓝色值 */
+  b: string
+}
+
 interface GetQRCodeResponse {
   /** 错误码 */
   errcode?: number
@@ -101,6 +111,16 @@ interface GetUnlimitedQRCodeRequest {
   line_color?: GetUnlimitedQRCodeLineColor
   /** 默认是false，是否需要透明底色，为 true 时，生成透明底色的小程序 */
   is_hyaline?: boolean
+}
+
+/** 不限制小程序码线条颜色（RGB，十进制表示） */
+interface GetUnlimitedQRCodeLineColor {
+  /** 红色值 */
+  r: string
+  /** 绿色值 */
+  g: string
+  /** 蓝色值 */
+  b: string
 }
 
 interface GetUnlimitedQRCodeResponse {

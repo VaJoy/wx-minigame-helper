@@ -1039,82 +1039,88 @@ interface WxWriteBLECharacteristicValueOption {
 
 interface BLEPeripheralServerAddServiceOption {
   /** 描述service的Object */
-  service: Record<string, any>
-  /** 蓝牙服务的 UUID */
-  uuid: string
-  /** characteristics列表 */
-  characteristics: Record<string, any>[]
-  /** characteristic 的 UUID */
-  uuid: string
-  /** 特征支持的操作 */
-  properties?: Record<string, any>
-  /**
-   * 写
-   * 默认值 false
-   */
-  write?: boolean
-  /**
-   * 无回复写
-   * 默认值 false
-   */
-  writeNoResponse?: boolean
-  /**
-   * 读
-   * 默认值 false
-   */
-  read?: boolean
-  /**
-   * 订阅
-   * 默认值 false
-   */
-  notify?: boolean
-  /**
-   * 回包
-   * 默认值 false
-   */
-  indicate?: boolean
-  /** 特征权限 */
-  permission?: Record<string, any>
-  /**
-   * 可读
-   * 默认值 false
-   */
-  readable?: boolean
-  /**
-   * 可写
-   * 默认值 false
-   */
-  writeable?: boolean
-  /**
-   * 加密读请求
-   * 默认值 false
-   */
-  readEncryptionRequired?: boolean
-  /**
-   * 加密写请求
-   * 默认值 false
-   */
-  writeEncryptionRequired?: boolean
-  /** 特征对应的二进制值 */
-  value?: ArrayBuffer
-  /** 描述符数据 */
-  descriptors?: Record<string, any>[]
-  /** Descriptor 的 UUID */
-  uuid: string
-  /** 描述符的权限 */
-  permission?: Record<string, any>
-  /**
-   * 写
-   * 默认值 false
-   */
-  write?: boolean
-  /**
-   * 读
-   * 默认值 false
-   */
-  read?: boolean
-  /** 描述符数据 */
-  value?: ArrayBuffer
+  service: {
+    /** 蓝牙服务的 UUID */
+    uuid: string
+    /** characteristics列表 */
+    characteristics: Array<{
+      /** characteristic 的 UUID */
+      uuid: string
+      /** 特征支持的操作 */
+      properties?: {
+        /**
+         * 写
+         * 默认值 false
+         */
+        write?: boolean
+        /**
+         * 无回复写
+         * 默认值 false
+         */
+        writeNoResponse?: boolean
+        /**
+         * 读
+         * 默认值 false
+         */
+        read?: boolean
+        /**
+         * 订阅
+         * 默认值 false
+         */
+        notify?: boolean
+        /**
+         * 回包
+         * 默认值 false
+         */
+        indicate?: boolean
+      }
+      /** 特征权限 */
+      permission?: {
+        /**
+         * 可读
+         * 默认值 false
+         */
+        readable?: boolean
+        /**
+         * 可写
+         * 默认值 false
+         */
+        writeable?: boolean
+        /**
+         * 加密读请求
+         * 默认值 false
+         */
+        readEncryptionRequired?: boolean
+        /**
+         * 加密写请求
+         * 默认值 false
+         */
+        writeEncryptionRequired?: boolean
+      }
+      /** 特征对应的二进制值 */
+      value?: ArrayBuffer
+      /** 描述符数据 */
+      descriptors?: Array<{
+        /** Descriptor 的 UUID */
+        uuid: string
+        /** 描述符的权限 */
+        permission?: {
+          /**
+           * 写
+           * 默认值 false
+           */
+          write?: boolean
+          /**
+           * 读
+           * 默认值 false
+           */
+          read?: boolean
+        }
+        /** 描述符数据 */
+        value?: ArrayBuffer
+      }>
+    }>
+  }
   /** 接口调用成功的回调函数 */
   success?: (res: any) => void
   /** 接口调用失败的回调函数 */

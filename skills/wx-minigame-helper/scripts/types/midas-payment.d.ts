@@ -51,7 +51,6 @@ interface WxRequestMidasFriendPaymentOption {
   currencyType: string
   /** 申请接入时的平台，platform 与应用id有关。 */
   platform: string
-  android?: Android平台
   /** 购买数量。mode=game 时必填。购买数量。详见 buyQuantity 限制说明。 */
   buyQuantity: number
   /** 分区 ID */

@@ -39,73 +39,83 @@ interface WxHideToastOption {
 
 interface WxOnOfficialComponentsInfoChangeListenerCallbackResult {
   /** 全部组件的信息 */
-  OfficialComponentsInfo: Record<string, any>
-  /** 通知组件信息 */
-  notificationComponentInfo: Record<string, any>
-  /** 组件的名称 */
-  name: string
-  /** 组件是否显示 */
-  isVisible: boolean
-  /** 组件的布局位置信息 */
-  boundingClientRect: Record<string, any>
-  /** 宽度，单位：px */
-  width: number
-  /** 高度，单位：px */
-  height: number
-  /** 上边界坐标，单位：px */
-  top: number
-  /** 右边界坐标，单位：px */
-  right: number
-  /** 下边界坐标，单位：px */
-  bottom: number
-  /** 左边界坐标，单位：px */
-  left: number
-  /** 福利组件信息 */
-  rewardsComponentInfo: Record<string, any>
-  /** 组件的名称 */
-  name: string
-  /** 可领取的礼包数量 */
-  canReceiveGiftCount: number
-  /** 可领取的好友礼包数量 */
-  canReceiveFriendGiftCount: number
-  /** 领取事件详情（只在onOfficialComponentsInfoChange回调中返回） */
-  receiveDetail: Record<string, any>
-  /** gift: 礼包, friendGift: 好友礼包 */
-  type: string
-  /** 礼包名称，只有 gift 类型才有 */
-  name: string
-  /** 礼包描述，只有 gift 类型才有 */
-  desc: string
-  /** 礼包图标，只有 gift 类型才有 */
-  icon: string
-  /** 擂台赛组件领奖信息 */
-  challengeRewardsComponentInfo: Record<string, any>
-  /** 组件的名称 */
-  name: string
-  /** 领取事件详情（只在onOfficialComponentsInfoChange回调中返回） */
-  receiveDetail: Record<string, any>
-  /** 用户领取的奖励列表 */
-  userSourceList: Record<string, any>[]
-  /** 奖励来源信息 */
-  source: Record<string, any>
-  /** 道具列表 */
-  propList: Record<string, any>[]
-  /** 道具名称 */
-  propName: string
-  /** 道具数量 */
-  propNum: number
-  /** 礼包名称 */
-  sourceName: string
-  /** 奖励类型：1-普通奖励, 2-稀有奖励 */
-  type: number
-  /** 获取的奖励数量 */
-  sourceNum: number
-  /** 奖励类型：0-道具礼包, 1-微信蓝包, 2-h5商家券, 3-现金红包, 4-小程序券, 5-盲盒 */
-  sourceType: number
-  /** 奖励领取结果：1-全部成功, 2-部分成功（礼物达到领取上限）, 3-领奖失败 */
-  awardResult: number
-  /** 是否收到了稀有奖励 */
-  receivedRareReward: boolean
+  OfficialComponentsInfo?: {
+    /** 通知组件信息 */
+    notificationComponentInfo?: {
+      /** 组件的名称 */
+      name: string
+      /** 组件是否显示 */
+      isVisible: boolean
+      /** 组件的布局位置信息 */
+      boundingClientRect?: {
+        /** 宽度，单位：px */
+        width: number
+        /** 高度，单位：px */
+        height: number
+        /** 上边界坐标，单位：px */
+        top: number
+        /** 右边界坐标，单位：px */
+        right: number
+        /** 下边界坐标，单位：px */
+        bottom: number
+        /** 左边界坐标，单位：px */
+        left: number
+      }
+    }
+    /** 福利组件信息 */
+    rewardsComponentInfo?: {
+      /** 组件的名称 */
+      name: string
+      /** 可领取的礼包数量 */
+      canReceiveGiftCount: number
+      /** 可领取的好友礼包数量 */
+      canReceiveFriendGiftCount: number
+      /** 领取事件详情（只在onOfficialComponentsInfoChange回调中返回） */
+      receiveDetail?: {
+        /** gift: 礼包, friendGift: 好友礼包 */
+        type: string
+        /** 礼包名称，只有 gift 类型才有 */
+        name: string
+        /** 礼包描述，只有 gift 类型才有 */
+        desc: string
+        /** 礼包图标，只有 gift 类型才有 */
+        icon: string
+      }
+    }
+    /** 擂台赛组件领奖信息 */
+    challengeRewardsComponentInfo?: {
+      /** 组件的名称 */
+      name: string
+      /** 领取事件详情（只在onOfficialComponentsInfoChange回调中返回） */
+      receiveDetail?: {
+        /** 用户领取的奖励列表 */
+        userSourceList: Array<{
+          /** 奖励来源信息 */
+          source?: {
+            /** 道具列表 */
+            propList: Array<{
+              /** 道具名称 */
+              propName: string
+              /** 道具数量 */
+              propNum: number
+            }>
+          }
+          /** 礼包名称 */
+          sourceName: string
+          /** 奖励类型：1-普通奖励, 2-稀有奖励 */
+          type: number
+          /** 获取的奖励数量 */
+          sourceNum: number
+          /** 奖励类型：0-道具礼包, 1-微信蓝包, 2-h5商家券, 3-现金红包, 4-小程序券, 5-盲盒 */
+          sourceType: number
+          /** 奖励领取结果：1-全部成功, 2-部分成功（礼物达到领取上限）, 3-领奖失败 */
+          awardResult: number
+          /** 是否收到了稀有奖励 */
+          receivedRareReward: boolean
+        }>
+      }
+    }
+  }
 }
 
 interface WxOnWindowResizeListenerCallbackResult {

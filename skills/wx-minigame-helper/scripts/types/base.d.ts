@@ -74,8 +74,16 @@ interface WxGetSystemInfoSuccessCallbackResult {
   system: string
   /** 客户端平台 */
   platform: string
-  android: Android微信
-  windows: Windows微信
+  /**
+   * 是否运行在 Android 平台（已废弃，请使用 platform 判断）
+   * @deprecated 该字段已停止维护
+   */
+  android: boolean
+  /**
+   * 是否运行在 Windows 平台（已废弃，请使用 platform 判断）
+   * @deprecated 该字段已停止维护
+   */
+  windows: boolean
   /**
    * 用户字体大小（单位px）。以微信客户端「我-设置-通用-字体大小」中的设置为准
    * 最低版本 1.5.0
@@ -234,8 +242,16 @@ interface WxGetSystemInfoAsyncSuccessCallbackResult {
   system: string
   /** 客户端平台 */
   platform: string
-  android: Android微信
-  windows: Windows微信
+  /**
+   * 是否运行在 Android 平台（已废弃，请使用 platform 判断）
+   * @deprecated 该字段已停止维护
+   */
+  android: boolean
+  /**
+   * 是否运行在 Windows 平台（已废弃，请使用 platform 判断）
+   * @deprecated 该字段已停止维护
+   */
+  windows: boolean
   /**
    * 用户字体大小（单位px）。以微信客户端「我-设置-通用-字体大小」中的设置为准
    * 最低版本 1.5.0
@@ -394,8 +410,16 @@ interface WxGetSystemInfoSyncResult {
   system: string
   /** 客户端平台 */
   platform: string
-  android: Android微信
-  windows: Windows微信
+  /**
+   * 是否运行在 Android 平台（已废弃，请使用 platform 判断）
+   * @deprecated 该字段已停止维护
+   */
+  android: boolean
+  /**
+   * 是否运行在 Windows 平台（已废弃，请使用 platform 判断）
+   * @deprecated 该字段已停止维护
+   */
+  windows: boolean
   /**
    * 用户字体大小（单位px）。以微信客户端「我-设置-通用-字体大小」中的设置为准
    * 最低版本 1.5.0
@@ -723,24 +747,6 @@ interface UserCryptoManager {
 
 /** WXWeakRef 类似 Web 标准里的 WeakRef。允许您保留对另一个对象的弱引用，而不会阻止此对象被 GC 回收。 */
 interface WXWeakRef {
-}
-
-/** 向调试面板中打印日志。console 是一个全局对象，可以直接访问。在微信客户端中，向 vConsole 中输出日志。 */
-interface console {
-  /** 向调试面板中打印 debug 日志 */
-  debug(): void
-  /** 向调试面板中打印 error 日志 */
-  error(): void
-  /** 在调试面板中创建一个新的分组。随后输出的内容都会被添加一个缩进，表示该内容属于当前分组。调用 console.groupEnd之后分组结束。 */
-  group(label: string): void
-  /** 结束由 console.group 创建的分组 */
-  groupEnd(): void
-  /** 向调试面板中打印 info 日志 */
-  info(): void
-  /** 向调试面板中打印 log 日志 */
-  log(): void
-  /** 向调试面板中打印 warn 日志 */
-  warn(): void
 }
 
 interface WxBase {

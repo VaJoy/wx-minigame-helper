@@ -221,6 +221,14 @@ interface GameServerManagerGetLastRoomInfoOption {
   complete?: (res: any) => void
 }
 
+/** 游戏帧数据 */
+interface Frame {
+  /** 帧号，从 1 开始递增 */
+  frameId: number
+  /** 指令数组，每一项的类型与配置项 `lockStepOption.dataType` 一致 */
+  actionList: string[] | ArrayBuffer[]
+}
+
 interface GameServerManagerGetLostFramesSuccessCallbackResult {
   data: Record<string, any>
   /** 丢失的帧数组 */
@@ -385,29 +393,32 @@ interface GameServerManagerOnLockStepErrorListenerCallbackResult {
 }
 
 interface GameServerManagerOnMatchListenerCallbackResult {
-  res: Record<string, any>
-  /** 与 startMatch 一致的 matchId */
-  matchId: string
-  /** 自己的 openId */
-  openId: string
-  /** 房间服务的accessinfo，如果matchid中指定需要匹配完成时创建房间服务，则会携带下来，后续调用房间服务相关接口加入房间即可 */
-  roomServiceAccessInfo: string
-  /** 唯一的本次对局id */
-  raceId: string
-  /** 匹配到的队伍信息 */
-  groupInfoList: Record<string, any>[]
-  /** 队伍的序号 */
-  groupIndex: number
-  /** 队伍中成员信息 */
-  memberInfoList: Record<string, any>[]
-  /** 成员的序号 */
-  memberIndex: number
-  /** 队伍中成员的openid */
-  openId: string
-  /** 队伍中成员的昵称 */
-  nickName: string
-  /** 队伍中成员的头像 */
-  avatarUrl: string
+  res: {
+    /** 与 startMatch 一致的 matchId */
+    matchId: string
+    /** 自己的 openId */
+    openId: string
+    /** 房间服务的accessinfo，如果matchid中指定需要匹配完成时创建房间服务，则会携带下来，后续调用房间服务相关接口加入房间即可 */
+    roomServiceAccessInfo: string
+    /** 唯一的本次对局id */
+    raceId: string
+    /** 匹配到的队伍信息 */
+    groupInfoList: Array<{
+      /** 队伍的序号 */
+      groupIndex: number
+      /** 队伍中成员信息 */
+      memberInfoList: Array<{
+        /** 成员的序号 */
+        memberIndex: number
+        /** 队伍中成员的openid */
+        openId: string
+        /** 队伍中成员的昵称 */
+        nickName: string
+        /** 队伍中成员的头像 */
+        avatarUrl: string
+      }>
+    }>
+  }
 }
 
 interface GameServerManagerOnRoomInfoChangeListenerCallbackResult {

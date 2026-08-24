@@ -68,11 +68,10 @@ interface WxCreateTCPSocketOption {
   /**
    * 套接字族，必须是 IPv4 或者 IPv6，默认是 IPv4
    * 默认值 ipv4
+   * 合法值: ipv4 | ipv6
    * 最低版本 3.6.4
    */
-  type?: string
-  ipv4?: IPv4
-  ipv6?: IPv6
+  type?: 'ipv4' | 'ipv6'
 }
 
 interface WxDownloadFileSuccessCallbackResult {
@@ -799,51 +798,36 @@ interface TCPSocketOnConnectListenerCallbackResult {
    * 异常信息
    * 最低版本 3.4.0
    */
-  reasons: Record<string, any>[]
-  /** 错误原因 */
-  errMsg: string
-  /** 错误码 */
-  errno: string
+  reasons: Array<{
+    /** 错误原因 */
+    errMsg: string
+    /** 错误码 */
+    errno: string
+  }>
   /**
    * 发送端地址信息（目前仅iOS和Android端支持）
    * 最低版本 3.4.1
    */
-  remoteInfo: Record<string, any>
-  /**
-   * 发送消息的 socket 的地址
-   * 最低版本 3.4.1
-   */
-  address: string
-  /**
-   * 使用的协议族，为 IPv4 或者 IPv6
-   * 最低版本 3.4.1
-   */
-  family: string
-  /**
-   * 端口号
-   * 最低版本 3.4.1
-   */
-  port: number
+  remoteInfo: {
+    /** 发送消息的 socket 的地址 */
+    address: string
+    /** 使用的协议族，为 IPv4 或者 IPv6 */
+    family: string
+    /** 端口号 */
+    port: number
+  }
   /**
    * 接收端地址信息（目前仅iOS和Android端支持）
    * 最低版本 3.4.1
    */
-  localInfo: Record<string, any>
-  /**
-   * 接收消息的 socket 的地址
-   * 最低版本 3.4.1
-   */
-  address: string
-  /**
-   * 使用的协议族，为 IPv4 或者 IPv6
-   * 最低版本 3.4.1
-   */
-  family: string
-  /**
-   * 端口号
-   * 最低版本 3.4.1
-   */
-  port: number
+  localInfo: {
+    /** 接收消息的 socket 的地址 */
+    address: string
+    /** 使用的协议族，为 IPv4 或者 IPv6 */
+    family: string
+    /** 端口号 */
+    port: number
+  }
 }
 
 interface TCPSocketOnErrorListenerCallbackResult {
@@ -855,21 +839,23 @@ interface TCPSocketOnMessageListenerCallbackResult {
   /** 收到的消息 */
   message: ArrayBuffer
   /** 发送端地址信息 */
-  remoteInfo: Record<string, any>
-  /** 发送消息的 socket 的地址 */
-  address: string
-  /** 使用的协议族，为 IPv4 或者 IPv6 */
-  family: string
-  /** 端口号 */
-  port: number
+  remoteInfo: {
+    /** 发送消息的 socket 的地址 */
+    address: string
+    /** 使用的协议族，为 IPv4 或者 IPv6 */
+    family: string
+    /** 端口号 */
+    port: number
+  }
   /** 接收端地址信息 */
-  localInfo: Record<string, any>
-  /** 接收消息的 socket 的地址 */
-  address: string
-  /** 使用的协议族，为 IPv4 或者 IPv6 */
-  family: string
-  /** 端口号 */
-  port: number
+  localInfo: {
+    /** 接收消息的 socket 的地址 */
+    address: string
+    /** 使用的协议族，为 IPv4 或者 IPv6 */
+    family: string
+    /** 端口号 */
+    port: number
+  }
 }
 
 /** 一个 TCP Socket 实例，默认使用 IPv4 协议 */
@@ -920,23 +906,25 @@ interface UDPSocketOnMessageListenerCallbackResult {
   /** 收到的消息。消息长度需要小于4096。 */
   message: ArrayBuffer
   /** 发送端地址信息 */
-  remoteInfo: Record<string, any>
-  /** 发送消息的 socket 的地址 */
-  address: string
-  /** 使用的协议族，为 IPv4 或者 IPv6 */
-  family: string
-  /** 端口号 */
-  port: number
+  remoteInfo: {
+    /** 发送消息的 socket 的地址 */
+    address: string
+    /** 使用的协议族，为 IPv4 或者 IPv6 */
+    family: string
+    /** 端口号 */
+    port: number
+  }
   /** message 的大小，单位：字节 */
   size: number
   /** 接收端地址信息，2.18.0 起支持 */
-  localInfo: Record<string, any>
-  /** 接收消息的 socket 的地址 */
-  address: string
-  /** 使用的协议族，为 IPv4 或者 IPv6 */
-  family: string
-  /** 端口号 */
-  port: number
+  localInfo: {
+    /** 接收消息的 socket 的地址 */
+    address: string
+    /** 使用的协议族，为 IPv4 或者 IPv6 */
+    family: string
+    /** 端口号 */
+    port: number
+  }
 }
 
 interface UDPSocketSendOption {
