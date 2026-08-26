@@ -749,6 +749,36 @@ interface UserCryptoManager {
 interface WXWeakRef {
 }
 
+interface WxLaunchOptionsReferrerInfo {
+  /** 来源小程序、公众号或 App 的 appId */
+  appId: string
+  /** 来源小程序传过来的数据，scene=1037 或 1038 时支持 */
+  extraData: Record<string, any>
+}
+
+interface WxLaunchOptionsBase {
+  /** 启动小游戏的场景值 */
+  scene: number
+  /** 启动小游戏的 query 参数 */
+  query: Record<string, string>
+  /** shareTicket，详见获取更多转发信息 */
+  shareTicket?: string
+  /** 来源信息。从另一个小程序、公众号或 App 进入小程序时返回，否则返回 {} */
+  referrerInfo?: WxLaunchOptionsReferrerInfo
+  /** 从微信群聊/单聊打开小程序时，表示具体微信群聊/单聊类型 */
+  chatType?: number
+}
+
+interface WxLaunchOptions extends WxLaunchOptionsBase {
+  /** 宿主传递的数据，第三方 app 中运行小游戏时返回，为 json 字符串，其中需要 host_scene 字段，表示宿主 app 对应的场景值 */
+  hostExtraData?: string
+}
+
+interface WxEnterOptions extends WxLaunchOptionsBase {
+  /** API 类别 */
+  apiCategory?: 'default' | 'nativeFunctionalized' | 'browseOnly' | 'embedded'
+}
+
 interface WxBase {
   readonly env: WxEnv
   /** 获取微信APP授权设置 */
@@ -760,9 +790,9 @@ interface WxBase {
   /** 获取设备基础信息 */
   getDeviceInfo(): void;
   /** 获取小游戏打开的参数（包括冷启动和热启动） */
-  getEnterOptionsSync(): void;
+  getEnterOptionsSync(): WxEnterOptions;
   /** 获取小游戏冷启动时的参数。热启动参数通过 wx.onShow 或 wx.getEnterOptionsSync 接口获取。 */
-  getLaunchOptionsSync(): void;
+  getLaunchOptionsSync(): WxLaunchOptions;
   /** 获取日志管理器对象。 */
   getLogManager(object?: WxGetLogManagerOption): LogManager;
   /** 获取性能管理器 */

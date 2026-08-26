@@ -13,7 +13,7 @@
 | [分包与启动优化](subpackage-startup.md) | 包体限制、分包策略、预下载、启动提速 |
 | [多人实时对战](multiplayer.md) | 匹配、房间、帧同步、对战语音、回放 |
 | [性能优化与排查](performance.md) | 卡顿/内存/发热/弱网，按症状索引 |
-| [网络与本地存储](storage-network.md) | 通信协议选型、Storage vs 文件系统 |
+| [网络与本地存储](storage-network.md) | 通信协议选型、WebSocket 接入、Storage vs 文件系统 |
 | [发布上线与版本更新](release-update.md) | 提审发布、灰度、客户端更新机制 |
 | [多平台适配](multi-platform.md) | Windows/Mac/鸿蒙适配、键鼠手柄输入 |
 

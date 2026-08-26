@@ -68,7 +68,7 @@ cm.deleteInterval = 500;  // 删除间隔 ms
 - 按 `lastTime` 排序，删最旧的 1/3
 - 正在使用的 bundle（zip 包）不会被误删（有保护判断）
 
-源码（`cache-manager.js:176-210`）：`clearLRU()` 排序后逐个 `removeCache`。
+源码（`cache-manager.js`）：`clearLRU()` for 循环移除记录 + 内部的 `deferredDelete` 逐文件延迟删除。
 
 ## 7. 完整调用示例
 

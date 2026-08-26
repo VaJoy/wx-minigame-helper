@@ -5,7 +5,7 @@
 
 ## API 参考（api/）
 
-- **[API 参考](api/README.md)**（917 篇）
+- **[API 参考](api/README.md)**（922 篇）
   - **[广告](api/ad/README.md)**（64 篇）
   - **[AI 能力](api/ai/README.md)**（58 篇）
     - **[AI 能力 / 人脸核验](api/ai/face/README.md)**（3 篇）
@@ -21,6 +21,7 @@
     - **[基础 / 系统信息](api/base/system/README.md)**（11 篇）
     - **[基础 / 更新机制](api/base/update/README.md)**（7 篇）
   - **[聊天工具](api/chattool/README.md)**（12 篇）
+  - **[云开发](api/cloud/README.md)**（5 篇）
   - **[数据分析](api/data-analysis/README.md)**（20 篇）
   - **[设备能力](api/device/README.md)**（132 篇）
     - **[设备能力 / 加速度计](api/device/accelerometer/README.md)**（4 篇）

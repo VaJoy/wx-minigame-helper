@@ -196,8 +196,8 @@ interface ScenePerformanceManager {
 }
 
 interface WxDataAnalysis {
-  /** 给定实验参数数组，获取对应的实验参数值 */
-  getExptInfoSync(keys: string[]): void;
+  /** 给定实验参数数组，获取对应的实验参数值。keys 不填则获取所有实验参数 */
+  getExptInfoSync(keys?: string[]): Record<string, any>;
   /** 给定实验参数数组，获取对应的实验参数值 */
   getGameExptInfo(options?: WxGetGameExptInfoOption): void;
   /** 初始化并返回一个游戏日志管理器实例，用于记录和管理游戏日志。 */

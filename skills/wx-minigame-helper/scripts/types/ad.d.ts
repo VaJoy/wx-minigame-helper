@@ -425,7 +425,7 @@ interface WxAd {
    */
   createRewardedVideoAd(object?: WxCreateRewardedVideoAdOption): RewardedVideoAd;
   /** 获取直玩广告组件展示状态。 */
-  getDirectAdStatusSync(): void;
+  getDirectAdStatusSync(): Pick<WxOnDirectAdStatusChangeListenerCallbackResult, 'isInMask' | 'isInDirectGameAd'>;
   /**
    * 获取封面广告组件展示状态。请通过 wx.getSystemInfoSync() 返回对象的 SDKVersion 判断基础库版本号后再使用该 API（小游戏端要求 >= 3.7.8， 小程序端要求 >= 3.7.8）。
    */

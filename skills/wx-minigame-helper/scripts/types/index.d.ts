@@ -5,6 +5,7 @@
 /// <reference path="./ai.d.ts" />
 /// <reference path="./base.d.ts" />
 /// <reference path="./chattool.d.ts" />
+/// <reference path="./cloud.d.ts" />
 /// <reference path="./data-analysis.d.ts" />
 /// <reference path="./device.d.ts" />
 /// <reference path="./ext.d.ts" />
@@ -25,7 +26,7 @@
 /// <reference path="./util.d.ts" />
 /// <reference path="./worker.d.ts" />
 
-interface Wx extends WxAd, WxAi, WxBase, WxChattool, WxDataAnalysis, WxDevice, WxExt, WxFile, WxGameRecorder, WxGameServerManager, WxLocation, WxMedia, WxMidasPayment, WxNavigate, WxNetwork, WxOfflineMode, WxOpen, WxRender, WxShare, WxStorage, WxUi, WxUtil, WxWorker {}
+interface Wx extends WxAd, WxAi, WxBase, WxChattool, WxCloud, WxDataAnalysis, WxDevice, WxExt, WxFile, WxGameRecorder, WxGameServerManager, WxLocation, WxMedia, WxMidasPayment, WxNavigate, WxNetwork, WxOfflineMode, WxOpen, WxRender, WxShare, WxStorage, WxUi, WxUtil, WxWorker {}
 
 /** 微信小游戏全局 API 对象 */
 declare const wx: Wx

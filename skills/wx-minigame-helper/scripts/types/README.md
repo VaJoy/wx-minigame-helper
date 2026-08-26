@@ -1,11 +1,11 @@
 # 微信小游戏 API TypeScript 类型声明
 
-依据本地知识库 `references/api/`（917 篇官方 API 文档）自动生成的 `.d.ts` 类型声明，覆盖：
+依据本地知识库 `references/api/`（922 篇官方 API 文档）生成的 `.d.ts` 类型声明，覆盖：
 
-- **380 个 `wx.*` 函数/属性**（含参数 Option、success 回调结果、同步返回值 Result）
-- **86 个类接口**（BannerAd、FileSystemManager、Worker、OpenDataContext 等）
-- **451 个类成员**（方法 / 事件监听 / 属性）
-- 共 673 个接口，全部字段带 JSDoc 中文注释（含默认值、最低基础库版本、@deprecated 废弃提示）
+- **381 个 `wx.*` 函数/属性**（含参数 Option、success 回调结果、同步返回值 Result）
+- **87 个类接口**（BannerAd、FileSystemManager、Worker、OpenDataContext、wx.cloud.Cloud 实例等）
+- **457 个类成员**（方法 / 事件监听 / 属性）
+- 共 684 个接口，全部字段带 JSDoc 中文注释（含默认值、最低基础库版本、@deprecated 废弃提示）
 
 ## 目录结构
 
@@ -14,9 +14,10 @@ types/
 ├── index.d.ts     总入口：聚合各域，声明全局 wx / canvas / GameGlobal / console
 ├── ad.d.ts        广告域（WxAd 接口 + 广告组件类）
 ├── base.d.ts      基础域（生命周期、系统信息、更新…）
+├── cloud.d.ts     云开发域（wx.cloud 云托管：init / callContainer / connectContainer / Cloud；手动补充）
 ├── open.d.ts      开放接口域（登录、用户信息、订阅消息…）
 ├── network.d.ts   网络域（request/download/websocket/tcp/udp…）
-├── ...            共 23 个域文件，与 references/api/ 目录一一对应
+├── ...            共 24 个域文件，与 references/api/ 目录一一对应
 ├── backend/       服务端（后端）HTTPS 接口类型，独立子包，见 backend/README.md
 └── README.md
 ```

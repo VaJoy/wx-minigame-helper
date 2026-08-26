@@ -1,0 +1,21 @@
+{
+  "name": "wxcloudrun-express",
+  "version": "1.0.0",
+  "description": "微信云托管 express 框架模版",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.2",
+    "sequelize": "^6.8.0"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

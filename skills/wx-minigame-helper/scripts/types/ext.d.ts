@@ -28,5 +28,5 @@ interface WxExt {
    */
   getExtConfig(object?: WxGetExtConfigOption): void;
   /** wx.getExtConfig 的同步版本。 */
-  getExtConfigSync(): void;
+  getExtConfigSync(): Record<string, any>;
 }

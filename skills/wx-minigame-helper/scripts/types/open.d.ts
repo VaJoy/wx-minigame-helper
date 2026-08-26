@@ -7,6 +7,29 @@ interface ErrnoCallbackResult {
   errno: number
 }
 
+interface WxAccountInfoMiniProgramInfo {
+  /** 小程序 appId */
+  appId: string
+  /** 小程序版本 */
+  envVersion: 'develop' | 'trial' | 'release'
+  /** 线上小程序版本号 */
+  version: string
+}
+
+interface WxAccountInfoPluginInfo {
+  /** 插件 appId */
+  appId: string
+  /** 插件版本号，'a.b.c' 这样的形式 */
+  version: string
+}
+
+interface WxGetAccountInfoSyncResult {
+  /** 小程序账号信息 */
+  miniProgram: WxAccountInfoMiniProgramInfo
+  /** 插件账号信息（仅在插件中调用时包含这一项） */
+  plugin?: WxAccountInfoPluginInfo
+}
+
 interface WxAddCardSuccessCallbackResult {
   /** 卡券添加结果列表 */
   cardList: Record<string, any>[]
@@ -1252,7 +1275,7 @@ interface WxGetUserInfoOption {
 /** 开放数据域对象 */
 interface OpenDataContext {
   /** 开放数据域和主域共享的 sharedCanvas */
-  canvas: Canvas
+  canvas: HTMLCanvasElement
   /** 批量获取用户信息，仅支持获取自己和好友的用户信息。该接口需要用户授权，且只在开放数据域下可用。 */
   getUserInfo(object?: WxGetUserInfoOption): void
   /** 向开放数据域发送消息 */
@@ -1608,7 +1631,7 @@ interface WxOpen {
   /** 创建用户信息按钮。使用前请参考 用户信息获取 */
   createUserInfoButton(object?: WxCreateUserInfoButtonOption): UserInfoButton;
   /** 获取当前账号信息。线上小程序版本号仅支持在正式版小程序中获取，开发版和体验版中无法获取。 */
-  getAccountInfoSync(): void;
+  getAccountInfoSync(): WxGetAccountInfoSyncResult;
   /** 获取视频号直播信息 */
   getChannelsLiveInfo(object?: WxGetChannelsLiveInfoOption): void;
   /** 获取视频号直播预告信息 */
@@ -1649,7 +1672,7 @@ interface WxOpen {
    */
   getSetting(object?: WxGetSettingOption): void;
   /** 获取主域和开放数据域共享的 sharedCanvas。**只有开放数据域能调用。** */
-  getSharedCanvas(): Canvas;
+  getSharedCanvas(): HTMLCanvasElement;
   /** 获取当前用户托管数据当中对应 key 的数据。该接口只可在开放数据域下使用 */
   getUserCloudStorage(object?: WxGetUserCloudStorageOption): void;
   /** 获取当前用户托管数据当中所有的 key。该接口需要用户授权，且只在开放数据域下可用。 */
