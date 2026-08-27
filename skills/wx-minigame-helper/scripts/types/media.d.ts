@@ -581,7 +581,7 @@ interface WxUpdateVoIPChatMuteConfigOption {
 /**
  * AudioBuffer接口表示存在内存里的一段短小的音频资源，利用WebAudioContext.decodeAudioData方法从一个音频文件构建，或者利用 WebAudioContext.createBuffer从原始数据构建。把音频放入AudioBuffer后，可以传入到一个 AudioBufferSourceNode进行播放。
  */
-interface AudioBuffer {
+interface WxAudioBuffer {
   /** 存储在缓存区的PCM数据的采样率（单位为sample/s) */
   sampleRate: number
   /** 返回存储在缓存区的PCM数据的采样帧率 */
@@ -599,7 +599,7 @@ interface AudioBuffer {
 }
 
 /** 空间音频监听器，代表在一个音频场景内唯一的位置和方向信息。 */
-interface AudioListener {
+interface WxAudioListener {
   /** 右手笛卡尔坐标系中X轴的位置。 */
   positionX: number
   /** 右手笛卡尔坐标系中Y轴的位置。 */
@@ -625,7 +625,7 @@ interface AudioListener {
 }
 
 /** AudioParam 接口代表音频相关的参数，通常是 AudioNode（例如 GainNode.gain）的参数 */
-interface AudioParam {
+interface WxAudioParam {
   /** 代表被具体的 AudioNode 创建的 AudioParam 的属性的初始值（只读） */
   defaultValue: number
   /** 代表参数有效范围的最大可能值（只读） */
@@ -639,7 +639,7 @@ interface AudioParam {
 /** 音频源节点，通过 WebAudioContext.createBufferSource方法获得。 */
 interface BufferSourceNode {
   /** 是一个 AudioBuffer， 它定义了要播放的音频，当设置它的值为 0 时，它会定义一个静默的单通道。（可读可写） */
-  buffer: AudioBuffer
+  buffer: WxAudioBuffer
   /** 定义音频是否循环播放（可读可写） */
   loop: boolean
   /** 定义音频循环播放时，开始播放的位置。单位是秒，默认值是0（可读可写） */
@@ -647,7 +647,7 @@ interface BufferSourceNode {
   /** 定义音频循环播放时，结束播放的位置。单位是秒，默认值是0（可读可写） */
   loopEnd: number
   /** 定义音频的播放倍速，数值越大速度越快，默认速度1.0，有效范围为 0 < playbackRate <= 2.0（可读可写） */
-  playbackRate: AudioParam
+  playbackRate: WxAudioParam
   /** 定义音频播放结束事件回调函数（可读可写） */
   onended: (...args: any[]) => void
   /**
@@ -1045,10 +1045,20 @@ interface VideoDecoderStartOption {
   abortVideo?: boolean
 }
 
+/** VideoDecoder.getFrameData 的同步返回结果 */
+interface VideoDecoderFrameData {
+  /** 帧数据宽度 */
+  width: number
+  /** 帧数据高度 */
+  height: number
+  /** 帧的像素数据 */
+  data: ArrayBuffer
+}
+
 /** 可通过 wx.createVideoDecoder 创建。 */
 interface VideoDecoder {
   /** 获取下一帧的解码数据 */
-  getFrameData(): void
+  getFrameData(): VideoDecoderFrameData | null
   /** 取消监听录制事件。当对应事件触发时，该回调函数不再执行 */
   off(eventName: string, callback: (res: any) => void): void
   /** 注册监听录制事件的回调函数。当对应事件触发时，回调函数会被执行 */
@@ -1081,7 +1091,7 @@ interface WebAudioContext {
   /** 当前上下文的最终目标节点，一般是音频渲染设备。 */
   destination: WebAudioContextNode
   /** 空间音频监听器。 */
-  listener: AudioListener
+  listener: WxAudioListener
   /** 采样率，通常在8000-96000之间，通常44100hz的采样率最为常见。 */
   sampleRate: number
   /** 关闭WebAudioContext */
@@ -1091,7 +1101,7 @@ interface WebAudioContext {
   /** 创建一个BiquadFilterNode */
   createBiquadFilter(): BiquadFilterNode
   /** 创建一个AudioBuffer，代表着一段驻留在内存中的短音频 */
-  createBuffer(numOfChannels: number, length: number, sampleRate: number): AudioBuffer
+  createBuffer(numOfChannels: number, length: number, sampleRate: number): WxAudioBuffer
   /** 创建一个BufferSourceNode实例，通过AudioBuffer对象来播放音频数据。 */
   createBufferSource(): BufferSourceNode
   /** 创建一个ChannelMergerNode */
@@ -1119,7 +1129,7 @@ interface WebAudioContext {
   /** 创建一个WaveShaperNode */
   createWaveShaper(): WaveShaperNode
   /** 异步解码一段资源为AudioBuffer。 */
-  decodeAudioData(audioData: ArrayBuffer, successCallback: (res: any) => void, errorCallback: (res: any) => void): AudioBuffer
+  decodeAudioData(audioData: ArrayBuffer, successCallback: (res: any) => void, errorCallback: (res: any) => void): WxAudioBuffer
   /** 同步恢复已经被暂停的WebAudioContext上下文 */
   resume(): Promise<any>
   /** 同步暂停WebAudioContext上下文 */

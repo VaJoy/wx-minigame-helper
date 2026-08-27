@@ -138,7 +138,7 @@ interface GameLogManagerLogOption {
 /** GameLogManager 类用于管理小游戏日志。可以通过 wx.getGameLogManager 获取。 */
 interface GameLogManager {
   /** 读取当前 logger 的全局 commonInfo 对象。 */
-  getCommonInfo(): void
+  getCommonInfo(): Record<string, any>
   /** 上报日志。log 方法支持在上报时传入日志等级、日志标签和日志内容。可设置上报后的回调函数。 */
   log(param?: GameLogManagerLogOption): void
   /**
@@ -186,7 +186,7 @@ interface ScenePerformanceManagerSetDataOption {
 /** ScenePerformanceManager 类用于管理小游戏运行性能数据上报。可以通过 wx.getScenePerformanceManager 获取。 */
 interface ScenePerformanceManager {
   /** 获取通用信息（由setCommonInfo数据得到） */
-  getCommonInfo(): void
+  getCommonInfo(): Record<string, any>
   /**
    * 设置通用信息（全局维度），用于描述贯穿所有上报的固定属性（如机型档位、用户角色等）。每次执行 `setData` 时都会自动带上这些信息。多次调用 `setCommonInfo` 会整体覆盖之前设置的参数。
    */

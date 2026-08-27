@@ -1,6 +1,6 @@
 # 云开发
 
-> 路径：`api/cloud/`　|　本目录 5 篇
+> 路径：`api/cloud/`　|　本目录 7 篇
 
 `wx.cloud` 是基础库内置的微信云开发/云托管能力入口，**无需引入额外 SDK**。本目录覆盖小游戏后端通信最常用的「微信云托管」调用链路（HTTP 与 WebSocket）。
 
@@ -15,11 +15,15 @@
 | [wx.cloud.Cloud.md](wx.cloud.Cloud.md) | wx.cloud.Cloud | 资源复用形态：跨账号访问授权方的云托管环境 |
 | [wx.cloud.callContainer.md](wx.cloud.callContainer.md) | wx.cloud.callContainer | 调用云托管 HTTP 服务（替代 wx.request，免域名配置） |
 | [wx.cloud.connectContainer.md](wx.cloud.connectContainer.md) | wx.cloud.connectContainer | 与云托管服务建立 WebSocket 连接（免 socket 域名配置） |
+| [wx.cloud.getTempFileURL.md](wx.cloud.getTempFileURL.md) | wx.cloud.getTempFileURL | 云托管对象存储：用云文件 ID 换临时访问链接（一次最多 50 个） |
+| [wx.cloud.downloadFile.md](wx.cloud.downloadFile.md) | wx.cloud.downloadFile | 云托管对象存储：用云文件 ID 下载到本地临时路径（走云托管通道，返回 downloadTask / Promise） |
 
 ## 版本要求
 
 - `wx.cloud.callContainer`：基础库 **2.23.0** 及以上
 - `wx.cloud.connectContainer`：基础库 **2.21.1** 及以上
+- `wx.cloud.getTempFileURL`：云托管「对象存储」能力，随云托管能力开放，无独立最低版本硬性要求（建议基础库 2.21.1+ 以对齐云托管链路）
+- `wx.cloud.downloadFile`：云托管「对象存储」能力，随云托管能力开放，无独立最低版本硬性要求（建议基础库 2.21.1+ 以对齐云托管链路）
 
 配套需在「小游戏管理后台」-「设置」-「基础库最低版本设置」中将值设定为对应版本以上。
 

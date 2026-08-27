@@ -1,6 +1,6 @@
 # 微信小游戏 API TypeScript 类型声明
 
-依据本地知识库 `references/api/`（922 篇官方 API 文档）生成的 `.d.ts` 类型声明，覆盖：
+依据本地知识库 `references/api/`（924 篇官方 API 文档）生成的 `.d.ts` 类型声明，覆盖：
 
 - **381 个 `wx.*` 函数/属性**（含参数 Option、success 回调结果、同步返回值 Result）
 - **87 个类接口**（BannerAd、FileSystemManager、Worker、OpenDataContext、wx.cloud.Cloud 实例等）

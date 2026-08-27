@@ -12,6 +12,97 @@ interface WxEnv {
   USER_DATA_PATH: string
 }
 
+interface WxSafeArea {
+  /** 安全区域左上角横坐标 */
+  left: number
+  /** 安全区域右下角横坐标 */
+  right: number
+  /** 安全区域左上角纵坐标 */
+  top: number
+  /** 安全区域右下角纵坐标 */
+  bottom: number
+  /** 安全区域的宽度，单位逻辑像素 */
+  width: number
+  /** 安全区域的高度，单位逻辑像素 */
+  height: number
+}
+
+/** wx.getWindowInfo 的同步返回结果 */
+interface WxGetWindowInfoResult {
+  /** 设备像素比 */
+  pixelRatio: number
+  /** 屏幕宽度，单位 px */
+  screenWidth: number
+  /** 屏幕高度，单位 px */
+  screenHeight: number
+  /** 可使用窗口宽度，单位 px */
+  windowWidth: number
+  /** 可使用窗口高度，单位 px */
+  windowHeight: number
+  /** 状态栏的高度，单位 px */
+  statusBarHeight: number
+  /** 在竖屏正方向下的安全区域 */
+  safeArea: WxSafeArea
+}
+
+/** wx.getAppAuthorizeSetting 的同步返回结果 */
+interface WxGetAppAuthorizeSettingResult {
+  /** 允许微信使用相册的开关（仅 iOS 有效） */
+  albumAuthorized: boolean
+  /** 蓝牙的系统开关 */
+  bluetoothAuthorized: boolean
+  /** 允许微信使用摄像头的开关 */
+  cameraAuthorized: boolean
+  /** 允许微信使用定位的开关 */
+  locationAuthorized: boolean
+  /** 允许微信使用麦克风的开关 */
+  microphoneAuthorized: boolean
+  /** 允许微信通知的开关 */
+  notificationAuthorized: boolean
+  /** 允许微信使用日历的开关 */
+  phoneCalendarAuthorized: boolean
+}
+
+/** wx.getAppBaseInfo 的同步返回结果 */
+interface WxGetAppBaseInfoResult {
+  /** 客户端基础库版本 */
+  SDKVersion: string
+  /** 是否已打开调试 */
+  enableDebug: boolean
+  /** 微信设置的语言 */
+  language: string
+  /** 微信版本号 */
+  version: string
+  /** 系统当前主题，取值为 `light` 或 `dark` */
+  theme: 'light' | 'dark'
+  /** 当前小程序运行的宿主环境 */
+  host?: Record<string, any>
+}
+
+/** wx.getDeviceInfo 的同步返回结果 */
+interface WxGetDeviceInfoResult {
+  /** 设备品牌 */
+  brand: string
+  /** 设备型号 */
+  model: string
+  /** 操作系统及版本 */
+  system: string
+  /** 设备性能等级（仅 Android）。取值为：-2 或 0（该设备无法运行小游戏），-1（性能未知），>=1（设备性能值，该值越高，设备性能越好） */
+  benchmarkLevel: number
+}
+
+/** wx.getSystemSetting 的同步返回结果 */
+interface WxGetSystemSettingResult {
+  /** 蓝牙的系统开关 */
+  bluetoothEnabled: boolean
+  /** 地理位置的系统开关 */
+  locationEnabled: boolean
+  /** Wi-Fi 的系统开关 */
+  wifiEnabled: boolean
+  /** `true` 表示模糊定位，`false` 表示精确定位，仅 iOS 支持 */
+  locationReducedAccuracy: boolean
+}
+
 interface WxGetDeviceBenchmarkInfoSuccessCallbackResult {
   /** 设备性能等级。-1（性能未知），>=1（设备性能值，该值越高，设备性能越好） */
   benchmarkLevel: number
@@ -782,13 +873,13 @@ interface WxEnterOptions extends WxLaunchOptionsBase {
 interface WxBase {
   readonly env: WxEnv
   /** 获取微信APP授权设置 */
-  getAppAuthorizeSetting(): void;
+  getAppAuthorizeSetting(): WxGetAppAuthorizeSettingResult;
   /** 获取微信APP基础信息 */
-  getAppBaseInfo(): void;
+  getAppBaseInfo(): WxGetAppBaseInfoResult;
   /** 获取设备性能得分和机型档位数据 */
   getDeviceBenchmarkInfo(object?: WxGetDeviceBenchmarkInfoOption): void;
   /** 获取设备基础信息 */
-  getDeviceInfo(): void;
+  getDeviceInfo(): WxGetDeviceInfoResult;
   /** 获取小游戏打开的参数（包括冷启动和热启动） */
   getEnterOptionsSync(): WxEnterOptions;
   /** 获取小游戏冷启动时的参数。热启动参数通过 wx.onShow 或 wx.getEnterOptionsSync 接口获取。 */
@@ -817,13 +908,13 @@ interface WxBase {
    */
   getSystemInfoSync(): WxGetSystemInfoSyncResult;
   /** 获取设备设置 */
-  getSystemSetting(): void;
+  getSystemSetting(): WxGetSystemSettingResult;
   /** 获取**全局唯一** 的版本更新管理器，用于管理小程序更新。关于小程序的更新机制，可以查看运行机制文档。 */
   getUpdateManager(): UpdateManager;
   /** 获取用户加密模块 */
   getUserCryptoManager(): UserCryptoManager;
   /** 获取窗口信息 */
-  getWindowInfo(): void;
+  getWindowInfo(): WxGetWindowInfoResult;
   /** 触发分包加载，详见 分包加载 */
   loadSubpackage(object?: WxLoadSubpackageOption): LoadSubpackageTask;
   /** 移除音频因为受到系统占用而被中断开始事件的监听函数 */

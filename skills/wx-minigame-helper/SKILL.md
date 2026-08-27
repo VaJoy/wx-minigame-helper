@@ -8,14 +8,14 @@ agent_created: true
 
 ## 知识库概览
 
-所有答案的事实来源是 `references/` 下的本地知识库（2026-08 抓取的官方文档快照，共 **1222 篇**：前端 1178 + 服务端 44，链接已全部本地化）。配套 `scripts/types/` 提供自动生成的 TypeScript 类型声明。
+所有答案的事实来源是 `references/` 下的本地知识库（2026-08 抓取的官方文档快照，共 **1224 篇**：前端 1180 + 服务端 44，链接已全部本地化）。配套 `scripts/types/` 提供自动生成的 TypeScript 类型声明。
 
 ```
 references/                   微信小游戏本地知识库（前端 + 服务端）
 ├── README.md                知识库说明与检索方法
 ├── INDEX.md                 全量层级索引树（166 个分类节点）
 ├── CONCEPTS.md              概念关系图谱（10 大概念簇 + Mermaid 依赖图）
-├── api/                     前端 API 参考（922 篇，24 个功能域，文件名即 API 名）
+├── api/                     前端 API 参考（924 篇，24 个功能域，文件名即 API 名）
 ├── guide/                   开发指南（256 篇，8 大主题），其中 `guide/cocos-packaging/` 是 Cocos Creator 视角的微信分包/远程包知识，详见「专项」节。
 ├── topics/                  任务专题（12 个，登录/广告/支付/Unity 转化/性能等）
 └── backend-api/             服务端开放接口（44 篇、16 功能域，仅开发者服务器可调用）
@@ -23,7 +23,7 @@ scripts/types/               自动生成的 TypeScript 类型声明（前端 wx
   backend/                   服务端接口类型声明（请求/返回参数）
 ```
 
-> **wx.cloud 云托管**：`references/api/cloud/`（5 篇）覆盖 `wx.cloud.init / callContainer / connectContainer / Cloud`（资源复用），改编自官方**小程序**云托管文档——小游戏用法与小程序一致，仅初始化位置不同（小游戏在 `game.js` 入口执行 `wx.cloud.init()`）。经典云开发（云函数 `callFunction` / 云数据库 `database` / 云存储 `uploadFile` 等）不在收录范围，以[官方云开发文档](https://developers.weixin.qq.com/minigame/dev/wxcloudservice/wxcloud/reference/client-api/)为准。
+> **wx.cloud 云托管**：`references/api/cloud/`（7 篇）覆盖 `wx.cloud.init / callContainer / connectContainer / getTempFileURL / downloadFile / Cloud`（资源复用），改编自官方**小程序**云托管文档——小游戏用法与小程序一致，仅初始化位置不同（小游戏在 `game.js` 入口执行 `wx.cloud.init()`）。经典云开发（云函数 `callFunction` / 云数据库 `database` / 云存储 `uploadFile` 等）不在收录范围，以[官方云开发文档](https://developers.weixin.qq.com/minigame/dev/wxcloudservice/wxcloud/reference/client-api/)为准。
 
 ## 适用边界
 

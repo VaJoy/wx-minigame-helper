@@ -377,13 +377,13 @@ interface VKFrame {
   /** 获取当前帧的 jpg 信息Buffer。安卓微信 8.0.49 开始支持，iOS微信 8.0.49 开始支持。 */
   getCameraJpgBuffer(width: number, height: number, quality: number): ArrayBuffer
   /** 获取当前帧纹理，目前只支持 YUV 纹理。 */
-  getCameraTexture(gl: WebGLRenderingContext): void
+  getCameraTexture(gl: WebGLRenderingContext): WebGLTexture
   /** 获取每帧的深度图信息Buffer。安卓微信 8.0.38 开始支持，iOS微信 8.0.39 开始支持。 */
-  getDepthBuffer(): void
+  getDepthBuffer(): ArrayBuffer
   /** 获取纹理调整矩阵。默认获取到的纹理是未经裁剪调整的纹理，此矩阵可用于在着色器中根据帧对象尺寸对纹理进行裁剪。 */
   getDisplayTransform(): Float32Array
   /** 获取每帧的腿部分割信息Buffer，安卓微信 8.0.43，iOS微信 8.0.43 开始支持。 */
-  getLegSegmentBuffer(): void
+  getLegSegmentBuffer(): ArrayBuffer
 }
 
 interface VKHandAnchorSize {

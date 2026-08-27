@@ -1,6 +1,6 @@
 // 微信小游戏 API 类型声明 — 域：cloud（微信云开发/云托管）
 // 手动补充（其余域为抓取自动生成）：依据 references/api/cloud/（官方小程序云托管文档改编，小游戏用法一致）
-// 覆盖 wx.cloud.init / callContainer / connectContainer / Cloud（资源复用）
+// 覆盖 wx.cloud.init / callContainer / connectContainer / getTempFileURL / downloadFile / Cloud（资源复用）
 // 注意：connectContainer 返回的 socketTask 类型 SocketTask 声明于 network.d.ts，需引用该域文件
 
 /// <reference path="./network.d.ts" />
@@ -133,6 +133,104 @@ interface WxCloudInstance {
   init(option?: WxCloudInitOption): Promise<void>
   /** 调用云托管服务（参数同 wx.cloud.callContainer，config 可省略） */
   callContainer(object: WxCloudInstanceCallContainerOption): Promise<WxCallContainerSuccessCallbackResult>
+  /** 获取云托管对象存储文件临时链接（参数同 wx.cloud.getTempFileURL，env 已在 resourceEnv 绑定） */
+  getTempFileURL(object: WxCloudGetTempFileURLOption): Promise<WxCloudGetTempFileURLSuccessCallbackResult>
+  /** 从云托管对象存储下载文件到本地临时路径（参数同 wx.cloud.downloadFile，env 已在 resourceEnv 绑定） */
+  downloadFile(object: WxCloudDownloadFileOption & Required<Pick<WxCloudDownloadFileOption, 'success'>>): DownloadTask
+  /** @see downloadFile —— 仅传 fail 回调时返回 downloadTask */
+  downloadFile(object: WxCloudDownloadFileOption & Required<Pick<WxCloudDownloadFileOption, 'fail'>>): DownloadTask
+  /** @see downloadFile —— 仅传 complete 回调时返回 downloadTask */
+  downloadFile(object: WxCloudDownloadFileOption & Required<Pick<WxCloudDownloadFileOption, 'complete'>>): DownloadTask
+  /** @see downloadFile —— 不传任何回调时返回 Promise */
+  downloadFile(object: Omit<WxCloudDownloadFileOption, 'success' | 'fail' | 'complete'>): Promise<WxCloudDownloadFileSuccessCallbackResult>
+  /** 实现签名（满足上述重载） */
+  downloadFile(object: WxCloudDownloadFileOption): DownloadTask | Promise<WxCloudDownloadFileSuccessCallbackResult>
+}
+
+/** getTempFileURL 请求 fileList 中单个元素（带有效期的对象形态） */
+interface WxCloudGetTempFileURLFileListItem {
+  /** 云文件 ID（对象存储文件 ID，从上传接口或控制台获取） */
+  fileID: string
+  /**
+   * 有效期时长，单位秒。默认值 86400（24 小时）
+   * 公有读文件获取的链接不会过期；私有文件默认 24h，可用此字段自定义
+   */
+  maxAge?: number
+}
+
+/** getTempFileURL 的 fileList 参数：云文件 ID 字符串数组，或带 maxAge 的对象数组；一次最多 50 个 */
+type WxCloudGetTempFileURLFileList = (string | WxCloudGetTempFileURLFileListItem)[]
+
+interface WxCloudGetTempFileURLOption {
+  /** 云文件 ID 列表（最多 50 个）。元素可为 fileID 字符串，或 { fileID, maxAge } 对象 */
+  fileList: WxCloudGetTempFileURLFileList
+  /** 配置。填写 env 后忽略 wx.cloud.init 指定的环境 */
+  config?: WxCloudContainerConfig
+  /** 接口调用成功的回调函数。传入则不返回 Promise */
+  success?: (res: WxCloudGetTempFileURLSuccessCallbackResult) => void
+  /** 接口调用失败的回调函数。传入则不返回 Promise */
+  fail?: (res: WxCloudGetTempFileURLFailCallbackResult) => void
+  /** 接口调用结束的回调函数（成功、失败都会执行） */
+  complete?: (res: any) => void
+}
+
+/** getTempFileURL 返回的 fileList 中单个元素 */
+interface WxCloudGetTempFileURLResultFileItem {
+  /** 云文件 ID */
+  fileID: string
+  /** 临时文件路径（真实可访问的 URL） */
+  tempFileURL: string
+  /** 有效期时长，单位秒 */
+  maxAge: number
+  /** 状态码，0 为成功 */
+  status: number
+  /** 成功为 ok，失败为失败原因 */
+  errMsg: string
+}
+
+interface WxCloudGetTempFileURLSuccessCallbackResult {
+  /** 文件列表（每项含 fileID / tempFileURL / maxAge / status / errMsg） */
+  fileList: WxCloudGetTempFileURLResultFileItem[]
+  /** 整体结果信息，成功为 ok */
+  errMsg: string
+}
+
+interface WxCloudGetTempFileURLFailCallbackResult {
+  /** 错误码 */
+  errCode: number
+  /** 错误信息，格式 getTempFileURL:fail msg */
+  errMsg: string
+}
+
+/** downloadFile 请求参数（云托管对象存储：云文件 ID 下载到本地） */
+interface WxCloudDownloadFileOption {
+  /** 云文件 ID（对象存储文件 ID，从上传文件接口或控制台获取） */
+  fileID: string
+  /** 配置。填写 env 后忽略 wx.cloud.init 指定的环境 */
+  config?: WxCloudContainerConfig
+  /** 接口调用成功的回调函数。传入则返回 downloadTask（不返回 Promise） */
+  success?: (res: WxCloudDownloadFileSuccessCallbackResult) => void
+  /** 接口调用失败的回调函数。传入则返回 downloadTask（不返回 Promise） */
+  fail?: (res: WxCloudDownloadFileFailCallbackResult) => void
+  /** 接口调用结束的回调函数（成功、失败都会执行） */
+  complete?: (res: any) => void
+}
+
+/** downloadFile 成功返回参数 */
+interface WxCloudDownloadFileSuccessCallbackResult {
+  /** 临时文件路径（下载到本地的文件，可通过 wx.saveFile 持久化） */
+  tempFilePath: string
+  /** 服务器返回的 HTTP 状态码 */
+  statusCode: number
+  /** 成功为 downloadFile:ok，失败为失败原因 */
+  errMsg: string
+}
+
+interface WxCloudDownloadFileFailCallbackResult {
+  /** 错误码 */
+  errCode: number
+  /** 错误信息，格式 downloadFile:fail msg */
+  errMsg: string
 }
 
 /** wx.cloud 对象：微信云开发/云托管能力入口（无需额外 SDK） */
@@ -157,6 +255,27 @@ interface WxCloudApi {
   connectContainer(object: WxConnectContainerOption): Promise<WxConnectContainerSuccessCallbackResult>
   /** 资源复用形态：创建跨账号（授权方）云环境调用实例 */
   Cloud: new (option: WxCloudConstructorOption) => WxCloudInstance
+  /**
+   * 用云文件 ID 换取真实临时访问链接（云托管对象存储）。
+   * 公有读文件的链接不会过期；私有文件默认 24h 有效期，可用 fileList[].maxAge 自定义。
+   * 一次最多 50 个。支持 Promise 风格（不传 success 回调即返回 Promise）；资源复用形态（new wx.cloud.Cloud）同样提供此方法
+   */
+  getTempFileURL(object: WxCloudGetTempFileURLOption): Promise<WxCloudGetTempFileURLSuccessCallbackResult>
+  /**
+   * 从云托管对象存储下载文件到本地临时路径（替代 wx.downloadFile，走云托管通道）。
+   * - 传入 success/fail/complete 任一回调 → 返回 downloadTask（可用 onProgressUpdate 监听进度、abort 取消）
+   * - 不传任何回调 → 返回 Promise（res.tempFilePath 为本地临时路径，可用 wx.saveFile 持久化）
+   * fileID 必填；资源复用形态（new wx.cloud.Cloud）同样提供此方法
+   */
+  downloadFile(object: WxCloudDownloadFileOption & Required<Pick<WxCloudDownloadFileOption, 'success'>>): DownloadTask
+  /** @see downloadFile —— 仅传 fail 回调时返回 downloadTask */
+  downloadFile(object: WxCloudDownloadFileOption & Required<Pick<WxCloudDownloadFileOption, 'fail'>>): DownloadTask
+  /** @see downloadFile —— 仅传 complete 回调时返回 downloadTask */
+  downloadFile(object: WxCloudDownloadFileOption & Required<Pick<WxCloudDownloadFileOption, 'complete'>>): DownloadTask
+  /** @see downloadFile —— 不传任何回调时返回 Promise */
+  downloadFile(object: Omit<WxCloudDownloadFileOption, 'success' | 'fail' | 'complete'>): Promise<WxCloudDownloadFileSuccessCallbackResult>
+  /** 实现签名（满足上述重载） */
+  downloadFile(object: WxCloudDownloadFileOption): DownloadTask | Promise<WxCloudDownloadFileSuccessCallbackResult>
 }
 
 /** api/cloud 域：挂载云开发/云托管能力入口 */

@@ -10,7 +10,7 @@
 | [AI 能力](ai/README.md) | 58 |
 | [基础](base/README.md) | 72 |
 | [聊天工具](chattool/README.md) | 12 |
-| [云开发](cloud/README.md) | 5 |
+| [云开发](cloud/README.md) | 7 |
 | [数据分析](data-analysis/README.md) | 20 |
 | [设备能力](device/README.md) | 132 |
 | [扩展配置](ext/README.md) | 2 |
