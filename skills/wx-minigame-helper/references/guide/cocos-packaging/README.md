@@ -1,6 +1,6 @@
 # Cocos Creator 微信小游戏分包与远程包（cocos-packaging）
 
-本目录是 `wx-minigame-helper` 知识库中 **Cocos Creator 视角** 的微信小游戏分包/远程包专项文档，共 6 篇。与 `topics/subpackage-startup.md`（微信平台侧机制）互补：本目录讲 **Cocos 里怎么配**，topics 讲 **微信平台怎么管**。
+本目录是 `wx-minigame-helper` 知识库中 **Cocos Creator 视角** 的微信小游戏分包/远程包专项文档，共 7 篇。与 `topics/subpackage-startup.md`（微信平台侧机制）互补：本目录讲 **Cocos 里怎么配**，topics 讲 **微信平台怎么管**。
 
 ## 文档清单
 
@@ -12,6 +12,7 @@
 | `04-remote-bundle.md` | 远程包核心：四步流程（配置→构建→上传→删除）、URL 规则、版本管理（bundleVers/MD5 Cache）、start-scene 首场景分包 |
 | `05-cache-manager.md` | 运行时下载缓存机制（三级查找、gamecaches 缓存目录、LRU 清理、清理接口、cacheEnabled/autoClear） |
 | `06-practical-recipes.md` | 资源布局建议、分包+远程混合方案、首包优化组合拳、常见坑速查、调试技巧、视频特殊处理 |
+| `07-engine-plugin.md` | 分离引擎机制（import-map → `plugin:cocos` 重定向，md5 匹配**固定插件清单**）、**分离引擎前提下功能裁剪依然能直接减少包体**（物理等模块不在插件清单内，裁掉即减对应 chunk 体积；附两种裁剪配置的实测数据对比）、构建后验证方法 |
 
 配套示例代码：`examples/remote-bundle-demo.ts`
 

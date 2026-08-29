@@ -70,6 +70,7 @@ scripts/types/               自动生成的 TypeScript 类型声明（前端 wx
 | `04-remote-bundle.md` | 远程包四步流程（配置→构建→上传→删除）、URL 规则、版本管理（bundleVers/MD5 Cache）、start-scene 首场景分包 |
 | `05-cache-manager.md` | 运行时下载缓存机制（三级查找、缓存目录、LRU、清理接口、cacheEnabled/autoClear） |
 | `06-practical-recipes.md` | 资源布局建议、分包+远程混合方案、首包优化组合拳、常见坑速查、调试技巧 |
+| `07-engine-plugin.md` | 分离引擎机制（import-map → `plugin:cocos` 重定向，md5 匹配编辑器内置的**固定插件清单**）、**分离引擎前提下功能裁剪依然能直接减少包体**（物理等模块不在插件清单内，裁掉即减对应 chunk 体积；附两种裁剪配置的实测数据对比）、构建后验证方法 |
 
 配套示例：`references/guide/cocos-packaging/examples/remote-bundle-demo.ts`（远程包加载示例）。
 
@@ -78,6 +79,10 @@ scripts/types/               自动生成的 TypeScript 类型声明（前端 wx
 - 远程包 URL = `{资源服务器地址}/remote/{bundleName}`，运行时 `loadBundle(name)` 自动下载 + 缓存
 - 微信包内资源**一次性全量加载**（非按需），大包既占体积又拖启动
 - 更新服务器资源必须更新版本号，否则缓存命中旧文件
+- 勾选"分离引擎"后引擎 chunk 按文件 md5 匹配**固定的官方插件清单**（编辑器内置）；物理系列、skeletal-animation 等不在清单内，**启用即 100% 进本地包**——因此分离引擎前提下功能裁剪依然直接减包（优先裁物理），实测按需裁剪比默认 preset 少约 1M 本地引擎代码（详见 `07-engine-plugin.md`）
+- 裁掉**插件已覆盖的模块**（spine、3d 等）不减包（JS 本地本就是 0 字节）；模块配套的 **wasm 二进制不跟随裁剪移除**。能否删除看 **import-map 壳映射**（插件壳会 fetch 同前缀本地 wasm，引用链在插件内部、grep 本地产物看不见）：壳映射仍在 → 必须保留，否则运行时报 wasm not found；壳映射已消失 → 可删（详见 `07-engine-plugin.md`）
+- `gfx-webgl2` 等 gfx 后端开关对分离引擎构建**零影响**：gfx 后端由插件运行时按设备能力动态选择（插件同时托管 webgl/webgl2 两套实现），实测开关前后构建产物逐字节一致（详见 `07-engine-plugin.md`）
+- **自定义引擎 + 分离引擎实测可用**（官方文档"不支持"的说法与 3.8.6 构建器实际行为不符）：md5 匹配不区分引擎来源，未改动的清单内 chunk 照常命中；被改动的 chunk 静默回退本地且无警告，命中插件版与本地魔改版**运行时混跑**——改引擎后须核对 import-map 条目数（详见 `07-engine-plugin.md`）
 
 ## 文档约定
 

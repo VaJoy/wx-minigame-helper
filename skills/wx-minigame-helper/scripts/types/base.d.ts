@@ -43,6 +43,8 @@ interface WxGetWindowInfoResult {
   statusBarHeight: number
   /** 在竖屏正方向下的安全区域 */
   safeArea: WxSafeArea
+  /** 窗口上边缘的 y 值 */
+  screenTop: number
 }
 
 /** wx.getAppAuthorizeSetting 的同步返回结果 */
@@ -77,16 +79,32 @@ interface WxGetAppBaseInfoResult {
   theme: 'light' | 'dark'
   /** 当前小程序运行的宿主环境 */
   host?: Record<string, any>
+  /** PC 内核版本号，仅在 PC 端存在该值 */
+  PCKernelVersion?: string
+  /** 微信字体大小缩放比例 */
+  fontSizeScaleFactor: number
+  /** 微信字体大小，单位 px */
+  fontSizeSetting: number
 }
 
 /** wx.getDeviceInfo 的同步返回结果 */
 interface WxGetDeviceInfoResult {
+  /** 应用（微信APP）二进制接口类型（仅 Android 支持） */
+  abi: string
+  /** 设备二进制接口类型（仅 Android 支持） */
+  deviceAbi: string
   /** 设备品牌 */
   brand: string
   /** 设备型号 */
   model: string
   /** 操作系统及版本 */
   system: string
+  /** 客户端平台 */
+  platform: string
+  /** 设备 CPU 型号（仅 Android 支持） */
+  cpuType: string
+  /** 设备内存大小，单位为 MB */
+  memorySize: string
   /** 设备性能等级（仅 Android）。取值为：-2 或 0（该设备无法运行小游戏），-1（性能未知），>=1（设备性能值，该值越高，设备性能越好） */
   benchmarkLevel: number
 }
@@ -101,6 +119,8 @@ interface WxGetSystemSettingResult {
   wifiEnabled: boolean
   /** `true` 表示模糊定位，`false` 表示精确定位，仅 iOS 支持 */
   locationReducedAccuracy: boolean
+  /** 设备方向（注意：IOS客户端横屏游戏获取deviceOrientation可能不准，建议以屏幕宽高为准） */
+  deviceOrientation: string
 }
 
 interface WxGetDeviceBenchmarkInfoSuccessCallbackResult {

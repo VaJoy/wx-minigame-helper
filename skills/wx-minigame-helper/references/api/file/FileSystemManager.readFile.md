@@ -96,24 +96,26 @@ data | string/ArrayBuffer | 文件内容
   
 ## 示例代码
     
-    
-    const fs = wx.getFileSystemManager()
-    fs.readFile({
-      filePath: `${wx.env.USER_DATA_PATH}/hello.txt`,
-      encoding: 'utf8',
-      position: 0,
-      success(res) {
-        console.log(res.data)
-      },
-      fail(res) {
-        console.error(res)
+```js
+  wx.cloud.downloadFile({
+      fileID: 'cloud://xxx/version.json',
+      success: downRes => {
+          const fs = wx.getFileSystemManager()
+          fs.readFile({
+              filePath: downRes.tempFilePath,
+              encoding: 'utf8',               // 关键：指定 utf8，res.data 才是字符串；不传则是 ArrayBuffer
+              success(readRes) {
+                  try {
+                      const json = JSON.parse(readRes.data as string) // 字符串 → JS 对象
+                      console.log(json)
+                  } catch (e) {
+                      console.error('JSON 解析失败：', e, readRes.data)
+                  }
+              },
+              fail(res) {
+                console.error(res)
+              }
+          })
       }
-    })
-    
-    // 同步接口
-    try {
-      const res = fs.readFileSync(`${wx.env.USER_DATA_PATH}/hello.txt`, 'utf8', 0)
-      console.log(res)
-    } catch(e) {
-      console.error(e)
-    }
+  })
+```

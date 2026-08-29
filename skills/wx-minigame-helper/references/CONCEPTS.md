@@ -169,7 +169,7 @@ graph LR
   - 资源管理（Addressable/AssetBundle/WasmSplit/首包）：[guide/engine/unity/assets/](guide/engine/unity/assets/README.md)
   - 性能与渲染：[guide/engine/unity/performance/](guide/engine/unity/performance/README.md)、[guide/engine/unity/rendering/](guide/engine/unity/rendering/README.md)
 - **Cocos/Laya/Egret 等**：通用适配层方案 [guide/engine/common-adaptation/](guide/engine/common-adaptation/README.md)（QuickStart → 各 Adapter：FileSystem/Http/Socket/WebSocket）
-- 引擎插件（减小包体）：[guide/base-ability/game-engine-plugin.md](guide/base-ability/game-engine-plugin.md)
+- 引擎插件（减小包体）：[guide/base-ability/game-engine-plugin.md](guide/base-ability/game-engine-plugin.md)（机制）；Cocos 视角的产物分析——插件清单固定、**分离引擎前提下功能裁剪依然减包**（物理等模块不在清单内）：[guide/cocos-packaging/07-engine-plugin.md](guide/cocos-packaging/07-engine-plugin.md)
 
 ## 10. 安全与合规
 

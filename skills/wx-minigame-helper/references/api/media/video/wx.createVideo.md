@@ -59,3 +59,61 @@ cover | 覆盖，保持原有长宽比例。保证视频尺寸一定大于容器
 ### [Video](<Video.md>)
 
 一个视频对象，可以通过设置该对象上的属性和调用该对象上的方法来控制视频
+
+
+## 示例
+
+```js
+        wx.cloud.downloadFile({
+            fileID: 'cloud://xxxx/demo.mp4',
+            success(downRes) {
+                if (downRes.statusCode !== 200) return
+
+                const windowInfo = wx.getWindowInfo();
+                const { windowWidth, windowHeight } = windowInfo;
+
+                const video = wx.createVideo({
+                    src: downRes.tempFilePath, // 关键：填下载到的本地临时路径
+                    x: 0,
+                    y: 0,
+                    width: windowWidth,            // 默认 300x150；要全屏就填窗口宽高
+                    height: windowHeight,
+                    controls: false,        // 显示播放/进度控件
+                    autoplay: true,        
+                    underGameView: true,     // false=覆盖在画布之上, true=置于画布之下
+                    objectFit: windowWidth > windowHeight ? 'contain' : 'cover',   // 竖屏配置，如果是横屏游戏就反着来
+                    loop: false
+                })
+                video.onPlay(() => console.log('开始播放'))
+                video.onEnded(() => { video.destroy() })        // 播完销毁，移除覆盖层
+                video.onError(e => console.error('播放失败：', e))
+                // 没开 autoplay 就：video.play()
+            },
+            fail(e) { console.error('下载失败：', e) }
+        })
+```
+
+## 注意事项
+
+在 Cocos Creator 中，如果希望视频播放于游戏画布之下，除了 `wx.createVideo` 中的 `underGameView` 参数值要设为 `true`，还需要：
+- 在 “项目设置 - 宏” 里勾选上 `ENABLE_TRANSPARENT_CANVAS`。
+- 摄像机的 `ClearFlags` 设为 `SOLID_COLOR`，`ClearColor` 的 alpha 设为 `0`。
+
+在 iOS 上， 视频画面初始化时，iOS 系统会强制附加一个缩放/位移过渡动画（约 0.5~1 秒），如果希望避免看到这个动画，可以提前创建、预置位置在视口外侧，待播放时再调整回视口：
+
+```js
+// 提前创建（比如游戏启动时），直接放在最终要显示的位置
+this.video = wx.createVideo({
+  // 略...
+  autoplay: false,    // 关闭自动播放
+  x: windowWidth * 2, // 隐藏在视口外
+  y: windowHeight * 2,
+});
+
+// 需要播放时，直接播放（此时位置已经是正确的，不会有移动动画）
+playVideo() {
+  this.video.x = 0;  // 移动视频到可见位置
+  this.video.y = 0;
+  this.video.play();
+}
+```
