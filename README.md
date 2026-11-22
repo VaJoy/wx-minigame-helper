@@ -47,9 +47,10 @@ SKILL 存放于 `./skills/wx-minigame-helper/`。
 ### 1、指令安装
 
 在项目执行：
-···
+
+```
 npx skills add VaJoy/wx-minigame-helper
-···
+```
 
 ### 2、手动安装
 
