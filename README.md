@@ -40,11 +40,25 @@ SKILL 存放于 `./skills/wx-minigame-helper/`。
 - **topics/ 任务专题**：面向"我要做 X"的导航页，把散落的指南与 API 串成可执行路径
 - **文档元信息完整**：每篇含 YAML frontmatter（`title` / `type` / `category` / `source` 官网原文链接），版本约束（"基础库 x.x.x 起支持"）全部保留
 
-## 安装使用
+## 安装
 
-本仓库整体就是一个 Skill，将完整目录安装到支持 Agent Skills 规范的 AI 编码工具（如 Qoder）的技能目录即可。安装后无需手动触发，当你咨询微信小游戏开发相关问题时，助手会自动加载本技能并从知识库检索作答。
+方式二选一：
 
-示例提问：
+### 1、指令安装
+
+在项目执行：
+···
+npx skills add VaJoy/wx-minigame-helper
+···
+
+### 2、手动安装
+
+下载源码后，将 `./skills/wx-minigame-helper/` 放到你的项目根目录。
+
+
+## 使用
+
+直接向 AI 提问：
 
 - "wx.login 的完整流程和 session_key 怎么处理？"
 - "怎么做一个好友排行榜？开放数据域工程怎么建？"
